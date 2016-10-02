@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
     resolve: {
         root: __dirname + '/src',
@@ -24,5 +26,14 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: true,
+            beautify: true,
+            mangle: false,
+            minimize: false
+        })
+    ]
 }
