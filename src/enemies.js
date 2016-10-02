@@ -1,6 +1,6 @@
 import Targets from 'targets';
 import {ENEMY_SPEED} from 'config';
-import {normal} from 'utils';
+import {normal, distance} from 'utils';
 
 class Enemy {
     constructor(data) {
@@ -15,14 +15,18 @@ class Enemy {
     }
 
     getClosestTarget() {
-        return Targets.getClosest(this.cords);
+        let target = Targets.getClosest(this.cords);
+
+        printErr('E', this.id, '-> T' + target.id)
+
+        return target;
     }
 
     getNextPosition() {
         let target = this.getClosestTarget();
         let n = normal([target.x - this.x, target.y - this.y]);
 
-        let pos = [this.x + n[0] * ENEMY_SPEED, this.y + n[1] * ENEMY_SPEED];
+        let pos = [Math.floor(this.x + n[0] * ENEMY_SPEED), Math.floor(this.y + n[1] * ENEMY_SPEED)];
 
         return pos;
     }

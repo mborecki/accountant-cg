@@ -6,8 +6,5 @@ import output from 'output';
 while (true) {
     input()
 
-    // Write an action using print()
-    // To debug: printErr('Debug messages...');
-
     output();
 }

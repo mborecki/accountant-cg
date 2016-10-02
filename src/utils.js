@@ -11,3 +11,25 @@ export function normal(v) {
 
     return [x / size, y / size];
 }
+
+export function reverse(v) {
+    return [-v[0], -v[1]];
+}
+
+export function add(v = []) {
+    let r = [0,0];
+
+    v.forEach((vector) => {
+        r[0] = r[0] + vector[0];
+        r[1] = r[1] + vector[1];
+    })
+
+    return r;
+}
+
+export function pointInDistance([x,y], vector, distance) {
+    let v = normal(v);
+
+    return [x + v[0] * distance, y + v[1] * distance];
+}
+

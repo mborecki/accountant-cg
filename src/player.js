@@ -27,9 +27,11 @@ export function isInDanger(cords = PLAYER.cords) {
     let dangers = [];
 
     Enemies.data.forEach((enemy) => {
-        let dist = distance(cords, enemy.getNextPosition())
+        let next = enemy.getNextPosition()
+        let dist = distance(cords, next)
         if (dist <= KILL_RANGE ) {
-            dangers.push(enemy.cords);
+            // TODO next -> point of entry
+            dangers.push(next);
         };
     });
 
@@ -53,7 +55,7 @@ export function getNextPosition(order){
             }
 
             let n = normal([order.x - PLAYER.x, order.y - PLAYER.y]);
-            return [PLAYER.x + n[0] * PLAYER_SPEED, PLAYER.x + n[1] * PLAYER_SPEED];
+            return [Math.floor(PLAYER.x + n[0] * PLAYER_SPEED), Math.floor(PLAYER.y + n[1] * PLAYER_SPEED)];
 
         default:
             return PLAYER.cords;

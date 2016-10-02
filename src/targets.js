@@ -43,7 +43,7 @@ class Targets {
                 return;
             }
 
-            if (distance(cords, value.cords) < distance, result.distance) {
+            if (distance(cords, value.cords) < distance(cords, result.cords)) {
                 result = value;
             }
         })

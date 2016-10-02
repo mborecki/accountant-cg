@@ -1,6 +1,6 @@
 import moveToMiddle from 'ai/moveToMiddle';
 import shootFirstEnemy from 'ai/shootFirstEnemy';
-import {isInDanger, getNextPosition} from 'player';
+import orderValidate from 'ai/orderValidate';
 
 const MOVE = 'MOVE'
 
@@ -9,7 +9,7 @@ const MODE_SHOOT_FIRST_ENEMY = 1;
 
 
 
-let mode = MODE_MOVE_TO_MIDDLE;
+let mode = MODE_SHOOT_FIRST_ENEMY;
 
 export function run() {
 
@@ -26,15 +26,7 @@ export function run() {
         }
     }());
 
-    let next = getNextPosition(order);
-
-    let danger = isInDanger(next);
-
-    if (danger) {
-        printErr('IN DANGER!', danger);
-    } else {
-        printErr('SAVE!');
-    }
+    order = orderValidate(order);
 
     return order;
 }
