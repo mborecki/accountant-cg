@@ -1,3 +1,15 @@
+import PLAYER from 'player';
+import {distance} from 'utils';
+
+class Target {
+    constructor(data) {
+        this.id = data.id;
+        this.cords = data.cords;
+        this.x = data.cords[0];
+        this.y = data.cords[1];
+    }
+}
+
 class Targets {
     constructor(data = []) {
         this.data = new Map(data);
@@ -8,7 +20,10 @@ class Targets {
     }
 
     update(id, cords) {
-        this.data.set(id, cords);
+        this.data.set(id, new Target({
+            id,
+            cords
+        }));
     }
 
     delete(id) {
@@ -17,6 +32,23 @@ class Targets {
 
     clone() {
         return new Targets(this.data);
+    }
+
+    getClosest(cords = [PLAYER.x, PLAYER.y]) {
+        let result = null;
+
+        this.data.forEach((value) => {
+            if (!result) {
+                result = value;
+                return;
+            }
+
+            if (distance(cords, value.cords) < distance, result.distance) {
+                result = value;
+            }
+        })
+
+        return result;
     }
 }
 
