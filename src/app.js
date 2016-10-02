@@ -1,12 +1,13 @@
-import {readInput} from 'input';
+import input from 'input';
+import output from 'output';
 
 
 // game loop
 while (true) {
-    readInput()
+    input()
 
     // Write an action using print()
     // To debug: printErr('Debug messages...');
 
-    print('MOVE 8000 4500'); // MOVE x y or SHOOT id
+    output();
 }

@@ -2,7 +2,7 @@ import {setPosition as playerSetPosition} from 'player';
 import Targets from 'targets';
 import Enemies from 'enemies';
 
-export const readInput = () => {
+export default function() {
 
     // Read player position;
     let inputs = readline().split(' ');
