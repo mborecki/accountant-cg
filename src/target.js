@@ -1,13 +1,8 @@
-
-
-
-
-
-exports.clear = () => {
+export function clear() {
 
 }
 
-exports.update = (id, cords) => {
+export function update(id, cords) {
 
 }
 

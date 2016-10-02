@@ -7,13 +7,13 @@ let F = () => {
     ble();
 }
 
-exports.setPosition = (cords) => {
+export function setPosition(cords) {
     let [x, y] = cords;
     PLAYER.x = x;
     PLAYER.y = y
 }
 
-exports.getPosition = () => {
+export function getPosition() {
     return [PLAYER.x, PLAYER.y];
 }
 
