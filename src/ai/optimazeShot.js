@@ -8,26 +8,15 @@ export default function(enemy) {
 
     let timeNow = enemy.getTimeToKill(playerNow);
 
-    printErr('timeNow', timeNow);
-
     let enemyNext = enemy.getNextPosition();
     let playerNext = getNextPosition({
         action: 'MOVE',
         x: enemyNext[0],
         y: enemyNext[1]
-    })
-
-    printErr('enemyNext', enemyNext);
-    printErr('playerNow', playerNow);
-    printErr('enemy.cords', enemy.cords);
-    printErr('playerNext', playerNext);
-
+    });
 
     let distNow = distance(playerNow, enemy.cords);
     let distNext = distance(playerNext, enemyNext);
-
-    printErr('distNow', distNow);
-    printErr('distNext', distNext);
 
     dd = distNow - distNext;
 
@@ -37,9 +26,6 @@ export default function(enemy) {
         dist = dist - dd;
 
         timeNew = Math.ceil(enemy.life / damage(dist));
-
-        printErr('dist', dist);
-        printErr('timeNew', timeNew);
 
         if (timeNow > timeNew) {
             return moveOrder();

@@ -5,8 +5,6 @@ import {PLAYER_SPEED, MAP_W, MAP_H} from 'config';
 export default function orderValidate(order) {
     let next = getNextPosition(order);
 
-    printErr('orderValidate', next);
-
     let danger = isInDanger(next);
 
     if (!order) {
@@ -27,7 +25,6 @@ export default function orderValidate(order) {
         let x = Math.floor(pos[0] + escapePath[0] * PLAYER_SPEED);
         let y = Math.floor(pos[1] + escapePath[1] * PLAYER_SPEED);
 
-        printErr('run to #1', x, y);
 
         if (x < 0) {
             x = 0;
@@ -48,8 +45,6 @@ export default function orderValidate(order) {
             x = ((pos[0] - x) > 0) ? 0 : MAP_W;
             y = MAP_H;
         }
-
-        printErr('run to #2', x, y);
 
         return orderValidate({
             action: 'MOVE',
