@@ -29,7 +29,7 @@ export default function() {
         let y = parseInt(inputs[2]);
         let life = parseInt(inputs[3]);
 
-        printErr('[E]', inputs);
+        printErr('[E]', id, '[', x, y, ']', life);
 
         Enemies.update(id, [x,y], life);
     }

@@ -33,3 +33,6 @@ export function pointInDistance([x,y], vector, distance) {
     return [x + v[0] * distance, y + v[1] * distance];
 }
 
+export function damage(distance) {
+    return Math.round(125000 / Math.pow(distance, 1.2));
+}
