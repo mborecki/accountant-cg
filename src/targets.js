@@ -27,7 +27,7 @@ class Targets {
     }
 
     delete(id) {
-        this.data.remove(id);
+        this.data.delete(id);
     }
 
     clone() {
@@ -49,6 +49,10 @@ class Targets {
         })
 
         return result;
+    }
+
+    get size() {
+        return this.data.size;
     }
 }
 

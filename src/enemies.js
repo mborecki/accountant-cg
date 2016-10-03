@@ -2,20 +2,25 @@ import Targets from 'targets';
 import {ENEMY_SPEED} from 'config';
 import {normal, distance} from 'utils';
 
+import {getSoloCollectTime} from 'simulation';
+
 class Enemy {
     constructor(data) {
         this.id = data.id;
         this.x = data.cords[0];
         this.y = data.cords[1];
         this.life = data.life;
+        this.active = true;
+
+        this.soloTime = null;
     }
 
     get cords() {
         return [this.x, this.y];
     }
 
-    getClosestTarget() {
-        let target = Targets.getClosest(this.cords);
+    getClosestTarget(targets = Targets) {
+        let target = targets.getClosest(this.cords);
 
         printErr('E', this.id, '-> T' + target.id)
 
@@ -30,6 +35,17 @@ class Enemy {
 
         return pos;
     }
+
+    /**
+     * Time to collect all targets by this enemy
+     */
+    getSoloCollectTime() {
+        if (!this.soloTime) {
+            this.soloTime = getSoloCollectTime(this);
+        }
+
+        return this.soloTime;
+    }
 }
 
 class Enemies {
@@ -37,16 +53,36 @@ class Enemies {
         this.data = new Map(data);
     }
 
-    clear() {
-        this.data.clear();
+    beforeInput() {
+        this.data.forEach((enemy) => {
+            enemy.active = false;
+        });
+    }
+
+    afterInput() {
+        this.data.forEach((enemy) => {
+            if (!enemy.active) {
+                this.data.delete(enemy.id);
+            }
+        })
     }
 
     update(id, cords, life) {
-        this.data.set(id, new Enemy({
-            id,
-            cords,
-            life
-        }));
+        let enemy = this.data.get(id);
+
+        if (!enemy) {
+            this.data.set(id, new Enemy({
+                id,
+                cords,
+                life
+            }));
+        } else {
+            enemy.x = cords[0];
+            enemy.y = cords[1];
+            enemy.life = life;
+            enemy.active = true;
+        }
+
     }
 
     get(id) {
@@ -54,7 +90,7 @@ class Enemies {
     }
 
     delete(id) {
-        this.data.remove(id);
+        this.data.delete(id);
     }
 
     clone() {

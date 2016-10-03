@@ -9,7 +9,7 @@ export default function() {
     playerSetPosition([parseInt(inputs[0]),parseInt(inputs[1])]);
 
     Targets.clear();
-    Enemies.clear();
+    Enemies.beforeInput();
 
     var dataCount = parseInt(readline());
     for (var i = 0; i < dataCount; i++) {
@@ -33,4 +33,6 @@ export default function() {
 
         Enemies.update(id, [x,y], life);
     }
+
+    Enemies.afterInput();
 }
