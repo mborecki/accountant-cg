@@ -54,6 +54,14 @@ class Targets {
     get size() {
         return this.data.size;
     }
+
+    saveTargets() {
+        this.targetCache = new Map(this.data);
+    }
+
+    restoreTargets() {
+        this.data = this.targetCache;
+    }
 }
 
 export default new Targets();

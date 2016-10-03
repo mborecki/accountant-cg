@@ -1,4 +1,5 @@
 import Targets from 'targets';
+import Enemies from 'enemies';
 import {distance} from 'utils';
 import {ENEMY_SPEED} from 'config';
 
@@ -26,4 +27,33 @@ export function getSoloCollectTime(enemy, _targets = Targets) {
     printErr('return', turns)
 
     return turns
+}
+
+export function fullSimulation(enemies = Enemies, targets = Targets) {
+    printErr('--- fullSimulation ---')
+    Enemies.savePositions();
+    Targets.saveTargets();
+
+    enemies.data.forEach((enemy) => {
+        enemy.value = 0;
+    })
+
+    while (targets.size) {
+        enemies.data.forEach((enemy) => {
+
+            if (!targets.size) return;
+
+            enemy.move(enemy.getNextPosition());
+
+            targets.data.forEach((target) => {
+                if (target.x === enemy.x && target.y === enemy.y) {
+                    enemy.value = (enemy.value || 0) + 1;
+                    Targets.delete(target.id);
+                }
+            });
+        });
+    }
+
+    Enemies.restorePositions();
+    Targets.restoreTargets();
 }

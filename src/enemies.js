@@ -1,6 +1,7 @@
 import Targets from 'targets';
 import {ENEMY_SPEED} from 'config';
-import {normal, distance} from 'utils';
+import {normal, distance, damage} from 'utils';
+import {getPosition as getPlayerPosition} from 'player';
 
 import {getSoloCollectTime} from 'simulation';
 
@@ -13,16 +14,20 @@ class Enemy {
         this.active = true;
 
         this.soloTime = null;
+        this.value = 0;
     }
 
     get cords() {
         return [this.x, this.y];
     }
 
+    move([x,y]) {
+        this.x = x;
+        this.y = y;
+    }
+
     getClosestTarget(targets = Targets) {
         let target = targets.getClosest(this.cords);
-
-        printErr('E', this.id, '-> T' + target.id)
 
         return target;
     }
@@ -33,7 +38,7 @@ class Enemy {
 
         let pos;
 
-        if  (distance(target, this.cords) < ENEMY_SPEED) {
+        if  (distance(target.cords, this.cords) < ENEMY_SPEED) {
             pos = target.cords;
         } else {
             pos = [Math.floor(this.x + n[0] * ENEMY_SPEED), Math.floor(this.y + n[1] * ENEMY_SPEED)];
@@ -51,6 +56,12 @@ class Enemy {
         }
 
         return this.soloTime;
+    }
+
+    getTimeToKill(cords = getPlayerPosition()) {
+        //TODO - moving target
+
+        return Math.ceil(this.life / damage(cords, this.cords));
     }
 }
 
@@ -133,6 +144,42 @@ class Enemies {
         });
 
         return result;
+    }
+
+    getHighValueTarget() {
+        let result = null;
+
+        this.data.forEach((enemy) => {
+            if (!result) {
+                result = enemy;
+                return;
+            }
+
+            if (enemy.value > result.value) {
+                result = enemy;
+            } else if (enemy.value === result.value && enemy.getTimeToKill() < result.getTimeToKill()) {
+                result = enemy;
+            }
+        })
+
+        return result;
+    }
+
+    savePositions() {
+        this.posCache = new Map();
+        this.data.forEach((enemy) => {
+            this.posCache.set(enemy.id, {x: enemy.x, y: enemy.y});
+        })
+    }
+
+    restorePositions() {
+        this.data.forEach((enemy) => {
+            let pos = this.posCache.get(enemy.id);
+            enemy.x = pos.x;
+            enemy.y = pos.y;
+
+            printErr('Enemy', enemy.id, 'value:', enemy.value);
+        })
     }
 }
 
