@@ -1,21 +1,24 @@
 import moveToMiddle from 'ai/moveToMiddle';
 import shootFirstEnemy from 'ai/shootFirstEnemy';
 import orderValidate from 'ai/orderValidate';
+import shootFastestEnemy from 'ai/shootFastestEnemy';
 
 const MOVE = 'MOVE'
 
 const MODE_MOVE_TO_MIDDLE = 0;
 const MODE_SHOOT_FIRST_ENEMY = 1;
+const MODE_SHOOT_FASTEST_ENEMY = 2;
 
-
-
-let mode = MODE_SHOOT_FIRST_ENEMY;
+let mode = MODE_SHOOT_FASTEST_ENEMY;
 
 export function run() {
 
-
     let order = (function(){
         switch (mode) {
+            case MODE_SHOOT_FASTEST_ENEMY:
+                return shootFastestEnemy();
+                break;
+
             case MODE_SHOOT_FIRST_ENEMY:
                 return shootFirstEnemy();
                 break;

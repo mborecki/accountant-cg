@@ -60,11 +60,18 @@ class Enemies {
     }
 
     afterInput() {
+        let toDelete = [];
         this.data.forEach((enemy) => {
             if (!enemy.active) {
-                this.data.delete(enemy.id);
+                toDelete.push(enemy.id);
             }
-        })
+        });
+
+        if (toDelete.length) {
+            toDelete.forEach((id) => {
+                this.data.delete(id);
+            });
+        }
     }
 
     update(id, cords, life) {
@@ -93,12 +100,33 @@ class Enemies {
         this.data.delete(id);
     }
 
+    get size() {
+        return this.data.size;
+    }
+
     clone() {
         return new Enemies(this.data);
     }
 
     getFirst() {
         return this.data.values().next().value;
+    }
+
+    getFastest() {
+        let result = null;
+
+        this.data.forEach((enemy) => {
+            if (!result) {
+                result = enemy;
+                return;
+            }
+
+            if (enemy.getSoloCollectTime() < result.getSoloCollectTime()) {
+                result = enemy;
+            }
+        });
+
+        return result;
     }
 }
 
