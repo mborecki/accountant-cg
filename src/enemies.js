@@ -31,7 +31,13 @@ class Enemy {
         let target = this.getClosestTarget();
         let n = normal([target.x - this.x, target.y - this.y]);
 
-        let pos = [Math.floor(this.x + n[0] * ENEMY_SPEED), Math.floor(this.y + n[1] * ENEMY_SPEED)];
+        let pos;
+
+        if  (distance(target, this.cords) < ENEMY_SPEED) {
+            pos = target.cords;
+        } else {
+            pos = [Math.floor(this.x + n[0] * ENEMY_SPEED), Math.floor(this.y + n[1] * ENEMY_SPEED)];
+        }
 
         return pos;
     }
