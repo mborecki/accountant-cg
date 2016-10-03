@@ -61,7 +61,7 @@ class Enemy {
     getTimeToKill(cords = getPlayerPosition()) {
         //TODO - moving target
 
-        return Math.ceil(this.life / damage(cords, this.cords));
+        return Math.ceil(this.life / damage(distance(cords, this.cords)));
     }
 }
 

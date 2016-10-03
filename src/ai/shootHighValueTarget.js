@@ -1,6 +1,7 @@
 import Targets from 'targets';
 import Enemies from 'enemies';
 import {fullSimulation} from 'simulation';
+import optimazeShot from 'ai/optimazeShot';
 
 let targetsCount = null;
 
@@ -17,8 +18,6 @@ export default function() {
     }
 
     let enemy = Enemies.getHighValueTarget();
-    return {
-        action: 'SHOOT',
-        id: enemy.id
-    }
+
+    return optimazeShot(enemy);
 }
