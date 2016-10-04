@@ -63,6 +63,13 @@ class Enemy {
 
         return Math.ceil(this.life / damage(distance(cords, this.cords)));
     }
+
+    getTimeToTarget() {
+        let target = this.getClosestTarget();
+        let dist = distance(this.cords, target.cords);
+
+        return Math.ceil(dist / ENEMY_SPEED);
+    }
 }
 
 class Enemies {
@@ -155,10 +162,18 @@ class Enemies {
                 return;
             }
 
+            function setEnemy(enemy) {
+                if (enemy.value === 1 && enemy.getTimeToKill() > enemy.getTimeToTarget()){
+                    return;
+                }
+
+                result = enemy;
+            }
+
             if (enemy.value > result.value) {
-                result = enemy;
+                setEnemy(enemy);
             } else if (enemy.value === result.value && enemy.getTimeToKill() < result.getTimeToKill()) {
-                result = enemy;
+                setEnemy(enemy);
             }
         })
 
@@ -178,7 +193,7 @@ class Enemies {
             enemy.x = pos.x;
             enemy.y = pos.y;
 
-            printErr('Enemy', enemy.id, 'value:', enemy.value);
+            printErr('Enemy', enemy.id, 'value:', enemy.value, enemy.getTimeToKill(), enemy.getTimeToTarget());
         })
     }
 }

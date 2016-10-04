@@ -3,6 +3,7 @@ import shootFirstEnemy from 'ai/shootFirstEnemy';
 import orderValidate from 'ai/orderValidate';
 import shootFastestEnemy from 'ai/shootFastestEnemy';
 import shootHighValueTarget from 'ai/shootHighValueTarget';
+import runFromTarget from 'ai/runFromTarget';
 
 const MOVE = 'MOVE'
 
@@ -14,6 +15,7 @@ const MODE_SHOOT_HIGH_VALUE_TARGET = 3;
 let mode = MODE_SHOOT_HIGH_VALUE_TARGET;
 
 export function run() {
+
 
     let order = (function(){
         switch (mode) {

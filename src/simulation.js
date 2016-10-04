@@ -54,6 +54,6 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
         });
     }
 
-    Enemies.restorePositions();
     Targets.restoreTargets();
+    Enemies.restorePositions();
 }

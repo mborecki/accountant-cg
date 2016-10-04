@@ -7,6 +7,8 @@ export default function(enemy) {
     let enemyNow = enemy.cords;
 
     let timeNow = enemy.getTimeToKill(playerNow);
+    let targetTime = enemy.getTimeToTarget();
+    let target = enemy.getClosestTarget();
 
     let enemyNext = enemy.getNextPosition();
     let playerNext = getNextPosition({
@@ -22,12 +24,16 @@ export default function(enemy) {
 
     let dist = distNow;
 
+    let iter = 0;
+
     while (dist > KILL_RANGE) {
+        iter++;
         dist = dist - dd;
 
         timeNew = Math.ceil(enemy.life / damage(dist));
 
-        if (timeNow > timeNew) {
+
+        if (timeNow > timeNew && (timeNew < (targetTime - iter) || enemy.value > 1)) {
             return moveOrder();
         }
     }
