@@ -27,8 +27,16 @@ export function add(v = []) {
     return r;
 }
 
+export function middle(v = []) {
+    let n = v.length;
+    let s = add(v);
+
+    return [s[0] / n, s[1] / n];
+}
+
 export function pointInDistance([x,y], vector, distance) {
-    let v = normal(v);
+    printErr('pointInDistance', [x,y], vector, distance);
+    let v = normal(vector);
 
     return [x + v[0] * distance, y + v[1] * distance];
 }
