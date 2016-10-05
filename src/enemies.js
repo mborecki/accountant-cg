@@ -15,6 +15,8 @@ class Enemy {
 
         this.soloTime = null;
         this.value = 0;
+
+        this.path = [];
     }
 
     get cords() {
@@ -69,6 +71,14 @@ class Enemy {
         let dist = distance(this.cords, target.cords);
 
         return Math.ceil(dist / ENEMY_SPEED);
+    }
+
+    addToPath(cords) {
+        this.path.push(cords);
+    }
+
+    clearPath() {
+        this.path.length = 0;
     }
 }
 

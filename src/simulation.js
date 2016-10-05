@@ -36,6 +36,7 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
 
     enemies.data.forEach((enemy) => {
         enemy.value = 0;
+        enemy.clearPath();
     })
 
     while (targets.size) {
@@ -43,7 +44,10 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
 
             if (!targets.size) return;
 
-            enemy.move(enemy.getNextPosition());
+            let next = enemy.getNextPosition();
+
+            enemy.addToPath(next);
+            enemy.move(next);
 
             targets.data.forEach((target) => {
                 if (target.x === enemy.x && target.y === enemy.y) {
