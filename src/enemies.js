@@ -182,8 +182,17 @@ class Enemies {
 
             if (enemy.value > result.value) {
                 setEnemy(enemy);
-            } else if (enemy.value === result.value && enemy.getTimeToTarget() < result.getTimeToTarget()) {
+                return;
+            }
+
+            if (enemy.getTimeToTarget() < result.getTimeToTarget()) {
                 setEnemy(enemy);
+                return;
+            }
+
+            if (enemy.getTimeToKill() < result.getTimeToKill()) {
+                setEnemy(enemy);
+                return;
             }
         })
 
