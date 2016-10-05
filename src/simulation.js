@@ -1,7 +1,7 @@
 import Targets from 'targets';
 import Enemies from 'enemies';
-import {distance} from 'utils';
-import {ENEMY_SPEED} from 'config';
+import {distance, getBonusPoints, damage} from 'utils';
+import {ENEMY_SPEED, ENEMY_POINTS, TARGET_POINTS} from 'config';
 
 export function getSoloCollectTime(enemy, _targets = Targets) {
     printErr('SIM getSoloCollectTime', enemy.id)
@@ -56,4 +56,37 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
 
     Targets.restoreTargets();
     Enemies.restorePositions();
+}
+
+export function getMaxDamage() {
+    return damage(2000);
+}
+
+export function getMinShotCount(){
+    const max = getMaxDamage();
+
+    let shots = 0;
+
+    Enemies.data.forEach((enemy) => {
+        shots = shots + Math.ceil(enemy.life / max);
+    });
+
+    return shots;
+}
+
+export function getMaxPoints() {
+    let targets = Targets.size * TARGET_POINTS;
+    let enemies = Enemies.size * ENEMY_POINTS;
+
+    let enemyLife = 0;
+
+    Enemies.data.forEach((enemy) => {
+        enemyLife = enemyLife + enemy.life;
+    });
+
+    let shots = getMinShotCount();
+
+    let bonus = getBonusPoints(Targets.size, enemyLife, shots);
+
+    return targets + enemies + bonus;
 }

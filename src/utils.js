@@ -48,3 +48,7 @@ export function damage(distance) {
 export function log(n, base) {
     return Math.log(n) / Math.log(base);
 }
+
+export function getBonusPoints(targetsCount, life, shots) {
+    return targetsCount * Math.max(0, life - 3*shots) * 3;
+}
