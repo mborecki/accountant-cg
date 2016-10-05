@@ -8,9 +8,7 @@ const PLAYER = {
     cords: null,
 }
 
-let F = () => {
-    ble();
-}
+let shotCount = 0;
 
 export function setPosition(cords) {
     let [x, y] = cords;
@@ -60,4 +58,12 @@ export function getNextPosition(order){
         default:
             return PLAYER.cords;
     }
+}
+
+export function addShot() {
+    shotCount++;
+}
+
+export function getShotCount() {
+    return shotCount;
 }

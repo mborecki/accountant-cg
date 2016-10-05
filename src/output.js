@@ -1,4 +1,5 @@
 import {run} from 'ai';
+import {addShot} from 'player';
 
 function createCommand(order) {
     switch(order.action) {
@@ -6,6 +7,7 @@ function createCommand(order) {
             return `MOVE ${order.x} ${order.y}`;
 
         case 'SHOOT':
+            addShot();
             return `SHOOT ${order.id}`;
     }
 }
