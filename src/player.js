@@ -29,6 +29,7 @@ export function isInDanger(cords = PLAYER.cords) {
         let dist = distance(cords, next)
         if (dist <= KILL_RANGE ) {
             // TODO next -> point of entry
+            printErr('in danger because of enemy', enemy.id);
             dangers.push(next);
         };
     });
@@ -38,6 +39,20 @@ export function isInDanger(cords = PLAYER.cords) {
     }
 
     return false;
+}
+
+export function isInDangerInFuture(cords = PLAYER.cords, turns = 1) {
+    let dangers = [];
+
+    Enemies.data.forEach((enemy) => {
+        for (let i=0; i < turns; i++) {
+            dangers.push(enemy.path[i]);
+        }
+    })
+
+    return !!dangers.filter((danger) => {
+        return distance(cords, danger) <= KILL_RANGE;
+    })
 }
 
 export function getNextPosition(order){
@@ -66,4 +81,53 @@ export function addShot() {
 
 export function getShotCount() {
     return shotCount;
+}
+
+export function findSafety(seed) {
+    let pos = seed;
+    const GRID = 20;
+
+    points = [seed];
+    checked = new Set();
+    safe = [];
+
+    function add(p) {
+        // printErr('findSafety', p, distance(p, pos), !checked.has(String(p)));
+        if (distance(p, pos) <= PLAYER_SPEED && !checked.has(String(p))) {
+            // printErr('PUSH!');
+            points.push(p)
+        }
+    }
+
+    while (points.length) {
+        let p = points.shift();
+        let [x,y] = p;
+        add([x+GRID, y]);
+        add([x-GRID, y]);
+        add([x, y-GRID]);
+        add([x, y+GRID]);
+        printErr('loop', p, distance(p, pos));
+
+        checked.add(String(p));
+
+        if (!isInDanger(p)) {
+            if (!isInDangerInFuture(p, 2)) {
+                return p;
+            }
+            safe.push(p);
+        }
+    }
+
+    return safe.sort((a, b) => {
+        let enemyMiddle = Enemies.getMiddle();
+        let enemyMiddleDistanceA = distance(a, enemyMiddle)
+        let enemyMiddleDistanceB = distance(b, enemyMiddle);
+
+        if (enemyMiddleDistanceA != enemyMiddleDistanceB) {
+            return enemyMiddleDistanceA < enemyMiddleDistanceB;
+        }
+
+        return 0;
+    })[0];
+
 }
