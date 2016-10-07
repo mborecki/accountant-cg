@@ -1,6 +1,6 @@
 import Targets from 'targets';
 import {ENEMY_SPEED} from 'config';
-import {normal, distance, damage} from 'utils';
+import {normal, distance, damage, middle} from 'utils';
 import {getPosition as getPlayerPosition} from 'player';
 
 import {getSoloCollectTime} from 'simulation';
@@ -214,6 +214,16 @@ class Enemies {
 
             printErr('Enemy', enemy.id, 'value:', enemy.value, enemy.getTimeToKill(), enemy.getTimeToTarget());
         })
+    }
+
+    getMiddle() {
+        let e = [];
+
+        this.data.forEach((enemy) => {
+            e.push(enemy.cords);
+        })
+
+        return middle(e);
     }
 }
 

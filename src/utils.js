@@ -52,3 +52,7 @@ export function log(n, base) {
 export function getBonusPoints(targetsCount, life, shots) {
     return targetsCount * Math.max(0, life - 3*shots) * 3;
 }
+
+export function normalTo(source, target) {
+    return normal([target[0] - source[0], target[1] - source[1]]);
+}
