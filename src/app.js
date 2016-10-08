@@ -4,6 +4,8 @@ import output from 'output';
 import {getShotCount} from 'player';
 import {getMaxPoints} from 'simulation';
 
+import Enemies from 'enemies';
+
 let turnCounter = 0;
 
 // game loop
@@ -17,4 +19,6 @@ while (true) {
     }
 
     output();
+
+    Enemies.endTurn();
 }

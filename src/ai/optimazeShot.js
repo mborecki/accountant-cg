@@ -1,8 +1,10 @@
 import {getPosition, getNextPosition, isInDanger} from 'player';
 import {distance, damage} from 'utils';
 import {PLAYER_SPEED, KILL_RANGE} from 'config'
+import {whenInDanger} from 'simulation';
 
 export default function(enemy) {
+    printErr('optimazeShot', enemy.id);
     let playerNow = getPosition();
     let enemyNow = enemy.cords;
 
@@ -41,9 +43,10 @@ export default function(enemy) {
     function moveOrder() {
         let order = {
             action: 'MOVE',
-            x: enemy.x,
-            y: enemy.y
+            x: enemyNext[0],
+            y: enemyNext[1]
         }
+
         if (isInDanger(getNextPosition(order))) {
             return shootOrder();
         }
@@ -52,6 +55,7 @@ export default function(enemy) {
     }
 
     function shootOrder() {
+        printErr('shootOrder', enemy.id);
         return {
             action: 'SHOOT',
             id: enemy.id

@@ -5,6 +5,8 @@ import shootFastestEnemy from 'ai/shootFastestEnemy';
 import shootHighValueTarget from 'ai/shootHighValueTarget';
 import runFromTarget from 'ai/runFromTarget';
 
+import Enemies from 'enemies';
+
 const MOVE = 'MOVE'
 
 const MODE_MOVE_TO_MIDDLE = 0;
@@ -16,6 +18,9 @@ let mode = MODE_SHOOT_HIGH_VALUE_TARGET;
 
 export function run() {
 
+    if (Enemies.size === 1) {
+        mode = MODE_SHOOT_FIRST_ENEMY;
+    }
 
     let order = (function(){
         switch (mode) {

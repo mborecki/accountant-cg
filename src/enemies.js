@@ -88,6 +88,10 @@ class Enemy {
     clearPath() {
         this.path.length = 0;
     }
+
+    endTurn() {
+        this.path.shift();
+    }
 }
 
 class Enemies {
@@ -232,6 +236,12 @@ class Enemies {
         })
 
         return middle(e);
+    }
+
+    endTurn() {
+        this.data.forEach((enemy) => {
+            enemy.endTurn();
+        })
     }
 }
 

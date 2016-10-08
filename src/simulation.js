@@ -60,8 +60,6 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
 
     Targets.restoreTargets();
     Enemies.restorePositions();
-
-    printErr(whenInDanger([0,0]));
 }
 
 export function getMaxDamage() {
