@@ -92,9 +92,7 @@ export function findSafety(seed) {
     safe = [];
 
     function add(p) {
-        // printErr('findSafety', p, distance(p, pos), !checked.has(String(p)));
         if (distance(p, pos) <= PLAYER_SPEED && !checked.has(String(p))) {
-            // printErr('PUSH!');
             points.push(p)
         }
     }
@@ -106,7 +104,6 @@ export function findSafety(seed) {
         add([x-GRID, y]);
         add([x, y-GRID]);
         add([x, y+GRID]);
-        printErr('loop', p, distance(p, pos));
 
         checked.add(String(p));
 

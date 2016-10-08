@@ -49,6 +49,14 @@ class Enemy {
         return pos;
     }
 
+    getPosition(turn = null) {
+        if (!turn) {
+            return this.cords;
+        }
+
+        return this.path[turn - 1];
+    }
+
     /**
      * Time to collect all targets by this enemy
      */

@@ -13,6 +13,7 @@ while (true) {
 
     if (turnCounter === 1) {
         printErr('MAX POINTS', getMaxPoints())
+
     }
 
     output();
