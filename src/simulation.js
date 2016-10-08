@@ -1,7 +1,7 @@
 import Targets from 'targets';
 import Enemies from 'enemies';
 import {distance, getBonusPoints, damage} from 'utils';
-import {ENEMY_SPEED, ENEMY_POINTS, TARGET_POINTS} from 'config';
+import {ENEMY_SPEED, ENEMY_POINTS, TARGET_POINTS, KILL_RANGE} from 'config';
 
 export function getSoloCollectTime(enemy, _targets = Targets) {
     printErr('SIM getSoloCollectTime', enemy.id)
@@ -26,7 +26,7 @@ export function getSoloCollectTime(enemy, _targets = Targets) {
 
     printErr('return', turns)
 
-    return turns
+    return turns;
 }
 
 export function fullSimulation(enemies = Enemies, targets = Targets) {
@@ -37,7 +37,7 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
     enemies.data.forEach((enemy) => {
         enemy.value = 0;
         enemy.clearPath();
-    })
+    });
 
     while (targets.size) {
         enemies.data.forEach((enemy) => {
@@ -60,6 +60,8 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
 
     Targets.restoreTargets();
     Enemies.restorePositions();
+
+    printErr(whenInDanger([0,0]));
 }
 
 export function getMaxDamage() {
@@ -93,4 +95,24 @@ export function getMaxPoints() {
     let bonus = getBonusPoints(Targets.size, enemyLife, shots);
 
     return targets + enemies + bonus;
+}
+
+export function whenInDanger(cords) {
+    let result = null;
+    Enemies.data.forEach((enemy) => {
+        let t = 0;
+
+        pos = enemy.getPosition(t);
+
+        while(pos && (!result || result > t)) {
+            if (distance(pos, cords) < KILL_RANGE) {
+                result = t;
+                return;
+            }
+
+            pos = enemy.getPosition(++t);
+        }
+    });
+
+    return result;
 }
