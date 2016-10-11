@@ -1,11 +1,11 @@
-import moveToMiddle from 'ai/moveToMiddle';
-import shootFirstEnemy from 'ai/shootFirstEnemy';
-import orderValidate from 'ai/orderValidate';
-import shootFastestEnemy from 'ai/shootFastestEnemy';
-import shootHighValueTarget from 'ai/shootHighValueTarget';
-import runFromTarget from 'ai/runFromTarget';
+import moveToMiddle from './ai/moveToMiddle.js';
+import shootFirstEnemy from './ai/shootFirstEnemy.js';
+import orderValidate from './ai/orderValidate.js';
+import shootFastestEnemy from './ai/shootFastestEnemy.js';
+import shootHighValueTarget from './ai/shootHighValueTarget.js';
+import runFromTarget from './ai/runFromTarget.js';
 
-import Enemies from 'enemies';
+import Enemies from './enemies';
 
 const MOVE = 'MOVE'
 

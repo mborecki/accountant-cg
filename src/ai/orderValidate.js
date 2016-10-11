@@ -1,6 +1,6 @@
-import {isInDanger, getNextPosition, getPosition} from 'player';
-import {normal, add} from 'utils';
-import {PLAYER_SPEED, MAP_W, MAP_H} from 'config';
+import {isInDanger, getNextPosition, getPosition} from '../player.js';
+import {normal, add} from '../utils.js';
+import {PLAYER_SPEED, MAP_W, MAP_H} from '../config.js';
 
 export default function orderValidate(order) {
     let next = getNextPosition(order);

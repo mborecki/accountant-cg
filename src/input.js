@@ -1,6 +1,6 @@
-import {setPosition as playerSetPosition} from 'player';
-import Targets from 'targets';
-import Enemies from 'enemies';
+import {setPosition as playerSetPosition} from './player.js';
+import Targets from './targets.js';
+import Enemies from './enemies.js';
 
 export default function() {
 

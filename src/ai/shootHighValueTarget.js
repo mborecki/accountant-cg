@@ -1,7 +1,7 @@
-import Targets from 'targets';
-import Enemies from 'enemies';
-import {fullSimulation} from 'simulation';
-import optimazeShot from 'ai/optimazeShot';
+import Targets from '../targets.js';
+import Enemies from '../enemies.js';
+import {fullSimulation} from '../simulation.js';
+import optimazeShot from './optimazeShot.js';
 
 let targetsCount = null;
 let enemiesCount = null;

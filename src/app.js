@@ -1,10 +1,10 @@
-import input from 'input';
-import output from 'output';
+import input from './input.js';
+import output from './output.js';
 
-import {getShotCount} from 'player';
-import {getMaxPoints} from 'simulation';
+import {getShotCount} from './player.js';
+import {getMaxPoints} from './simulation.js';
 
-import Enemies from 'enemies';
+import Enemies from './enemies.js';
 
 let turnCounter = 0;
 

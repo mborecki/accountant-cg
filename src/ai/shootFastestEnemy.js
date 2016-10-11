@@ -1,5 +1,5 @@
-import Enemies from 'enemies';
-import optimazeShot from 'ai/optimazeShot';
+import Enemies from '../enemies.js';
+import optimazeShot from './optimazeShot.js';
 
 let enemiesCount = null;
 

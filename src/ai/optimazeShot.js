@@ -1,7 +1,7 @@
-import {getPosition, getNextPosition, isInDanger} from 'player';
-import {distance, damage} from 'utils';
-import {PLAYER_SPEED, KILL_RANGE} from 'config'
-import {whenInDanger} from 'simulation';
+import {getPosition, getNextPosition, isInDanger} from '../player.js';
+import {distance, damage} from '../utils.js';
+import {PLAYER_SPEED, KILL_RANGE} from '../config.js';
+import {whenInDanger} from '../simulation.js';
 
 export default function(enemy) {
     printErr('optimazeShot', enemy.id);
@@ -22,7 +22,7 @@ export default function(enemy) {
     let distNow = distance(playerNow, enemy.cords);
     let distNext = distance(playerNext, enemyNext);
 
-    dd = distNow - distNext;
+    let dd = distNow - distNext;
 
     let dist = distNow;
 
@@ -32,7 +32,7 @@ export default function(enemy) {
         iter++;
         dist = dist - dd;
 
-        timeNew = Math.ceil(enemy.life / damage(dist));
+        let timeNew = Math.ceil(enemy.life / damage(dist));
 
 
         if (timeNow > timeNew && (timeNew < (targetTime - iter) || enemy.value > 1)) {

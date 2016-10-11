@@ -1,7 +1,7 @@
-import Targets from 'targets';
-import Enemies from 'enemies';
-import {distance, getBonusPoints, damage} from 'utils';
-import {ENEMY_SPEED, ENEMY_POINTS, TARGET_POINTS, KILL_RANGE} from 'config';
+import Targets from './targets.js';
+import Enemies from './enemies.js';
+import {distance, getBonusPoints, damage} from './utils.js';
+import {ENEMY_SPEED, ENEMY_POINTS, TARGET_POINTS, KILL_RANGE} from './config.js';
 
 export function getSoloCollectTime(enemy, _targets = Targets) {
     printErr('SIM getSoloCollectTime', enemy.id)

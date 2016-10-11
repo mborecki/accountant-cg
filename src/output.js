@@ -1,5 +1,5 @@
-import {run} from 'ai';
-import {addShot} from 'player';
+import {run} from './ai.js';
+import {addShot} from './player.js';
 
 function createCommand(order) {
     switch(order.action) {

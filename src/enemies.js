@@ -1,9 +1,9 @@
-import Targets from 'targets';
-import {ENEMY_SPEED} from 'config';
-import {normal, distance, damage, middle} from 'utils';
-import {getPosition as getPlayerPosition} from 'player';
+import Targets from './targets.js';
+import {ENEMY_SPEED} from './config.js';
+import {normal, distance, damage, middle} from './utils.js';
+import {getPosition as getPlayerPosition} from './player.js';
 
-import {getSoloCollectTime} from 'simulation';
+import {getSoloCollectTime} from './simulation.js';
 
 class Enemy {
     constructor(data) {

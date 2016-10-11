@@ -1,5 +1,5 @@
-import PLAYER from 'player';
-import {distance} from 'utils';
+import PLAYER from './player.js';
+import {distance} from './utils.js';
 
 class Target {
     constructor(data) {

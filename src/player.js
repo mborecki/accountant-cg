@@ -1,6 +1,6 @@
-import Enemies from 'enemies';
-import {distance, normal} from 'utils';
-import {KILL_RANGE, PLAYER_SPEED} from 'config'
+import Enemies from './enemies.js';
+import {distance, normal} from './utils.js';
+import {KILL_RANGE, PLAYER_SPEED} from './config.js';
 
 const PLAYER = {
     x: null,
@@ -128,3 +128,5 @@ export function findSafety(seed) {
     })[0];
 
 }
+
+export default PLAYER;

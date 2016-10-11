@@ -1,7 +1,7 @@
-import {getPosition} from 'player';
-import Targets from 'targets';
-import {KILL_RANGE} from 'config';
-import {distance, pointInDistance, middle} from 'utils';
+import {getPosition} from '../player.js';
+import Targets from '../targets.js';
+import {KILL_RANGE} from '../config.js';
+import {distance, pointInDistance, middle} from '../utils.js';
 
 export default function runFromTarget(order) {
     let targets = [];

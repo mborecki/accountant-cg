@@ -1,4 +1,4 @@
-import {MAP_W, MAP_H} from 'config';
+import {MAP_W, MAP_H} from '../config.js';
 
 export default function() {
     return {
