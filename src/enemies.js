@@ -96,7 +96,10 @@ class Enemy {
 
 class Enemies {
     constructor(data = []) {
-        this.data = new Map(data);
+        this.data = new Map();
+        data.forEach((e) => {
+            this.data.set(e.id, e);
+        });
     }
 
     beforeInput() {
@@ -211,6 +214,19 @@ class Enemies {
         return result;
     }
 
+    getOneTurnKill() {
+        let pos = getPlayerPosition();
+        let kills = this.filter((enemy) => {
+            return enemy.getTimeToKill(pos) === 1;
+        });
+
+        if (kills.size) {
+            return kills.getHighValueTarget();
+        }
+
+        return null;
+    }
+
     savePositions() {
         this.posCache = new Map();
         this.data.forEach((enemy) => {
@@ -236,6 +252,19 @@ class Enemies {
         })
 
         return middle(e);
+    }
+
+    filter(condition) {
+        let pass = [];
+
+        this.data.forEach((enemy) => {
+            if (condition(enemy, this)) {
+                pass.push(enemy);
+                printErr('pass', enemy.id)
+            }
+        })
+
+        return new Enemies(pass);
     }
 
     endTurn() {
