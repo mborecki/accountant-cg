@@ -18,9 +18,9 @@ let mode = MODE_SHOOT_HIGH_VALUE_TARGET;
 
 export function run() {
 
-    if (Enemies.size === 1) {
-        mode = MODE_SHOOT_FIRST_ENEMY;
-    }
+    // if (Enemies.size === 1) {
+    //     mode = MODE_SHOOT_FIRST_ENEMY;
+    // }
 
     let order = (function(){
         switch (mode) {
