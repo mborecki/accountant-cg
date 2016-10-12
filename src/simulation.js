@@ -100,9 +100,10 @@ export function whenInDanger(cords) {
     Enemies.data.forEach((enemy) => {
         let t = 0;
 
-        pos = enemy.getPosition(t);
+        let pos = enemy.getPosition(t);
 
         while(pos && (!result || result > t)) {
+            // printErr('XXX', pos, cords)
             if (distance(pos, cords) < KILL_RANGE) {
                 result = t;
                 return;

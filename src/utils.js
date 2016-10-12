@@ -1,3 +1,5 @@
+import {MAP_W, MAP_H} from './config.js';
+
 export function distance([x1,y1], [x2, y2]) {
     let dx = Math.abs(x1 - x2);
     let dy = Math.abs(y1 - y2);
@@ -34,8 +36,14 @@ export function middle(v = []) {
     return [s[0] / n, s[1] / n];
 }
 
+export function rotate([x,y], rad) {
+    let s = Math.sin(rad);
+    let c = Math.cos(rad);
+    return [x*c - y*s, x*s + y*c];
+}
+
 export function pointInDistance([x,y], vector, distance) {
-    printErr('pointInDistance', [x,y], vector, distance);
+    // printErr('pointInDistance', [x,y], vector, distance);
     let v = normal(vector);
 
     return [x + v[0] * distance, y + v[1] * distance];
@@ -55,4 +63,13 @@ export function getBonusPoints(targetsCount, life, shots) {
 
 export function normalTo(source, target) {
     return normal([target[0] - source[0], target[1] - source[1]]);
+}
+
+export function inMap([x,y]) {
+    if (x < 0) return false;
+    if (y < 0) return false;
+    if (x >= MAP_W) return false;
+    if (y >= MAP_H) return false;
+
+    return true;
 }
