@@ -1,5 +1,5 @@
 import Targets from './targets.js';
-import {ENEMY_SPEED} from './config.js';
+import {ENEMY_SPEED, KILL_RANGE} from './config.js';
 import {normal, distance, damage, middle} from './utils.js';
 import {getPosition as getPlayerPosition} from './player.js';
 
@@ -278,6 +278,21 @@ class Enemies {
         })
 
         return middle(e);
+    }
+
+    isSafe(cords) {
+        let i = this.data.values();
+
+        let enemy = i.next().value
+        while (enemy) {
+            if (distance(cords, (enemy.getPosition(1) || enemy.getPosition())) <= KILL_RANGE) {
+                return false;
+            }
+
+            enemy = i.next().value
+        }
+
+        return true;
     }
 
     endTurn() {
