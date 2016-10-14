@@ -47,10 +47,12 @@ export default function(enemy) {
     }
 
     function moveOrder() {
+        let time = Math.floor(distNow / PLAYER_SPEED);
+        let p = enemy.getPosition(time) || enemyNext;
         let order = {
             action: 'MOVE',
-            x: enemyNext[0],
-            y: enemyNext[1]
+            x: p[0],
+            y: p[1]
         }
 
         if (isInDanger(getNextPosition(order))) {
