@@ -8,6 +8,10 @@ class Target {
         this.x = data.cords[0];
         this.y = data.cords[1];
     }
+
+    isSafeableBefore(turn) {
+
+    }
 }
 
 class Targets {
@@ -36,15 +40,20 @@ class Targets {
 
     getClosest(cords = [PLAYER.x, PLAYER.y]) {
         let result = null;
+        let resultDistance = null;
 
         this.data.forEach((value) => {
             if (!result) {
                 result = value;
+                resultDistance = distance(cords, value.cords)
                 return;
             }
 
-            if (distance(cords, value.cords) < distance(cords, result.cords)) {
+            let dist = distance(cords, value.cords)
+
+            if (dist < resultDistance) {
                 result = value;
+                resultDistance = dist;
             }
         })
 

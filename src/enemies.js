@@ -177,6 +177,9 @@ class Enemies {
 
     getHighValueTarget() {
         let result = null;
+        let resultValue = null;
+        let resultTTT = null;
+        let resultTTK = null;
 
         this.data.forEach((enemy) => {
             if (!result) {
@@ -190,19 +193,25 @@ class Enemies {
                 }
 
                 result = enemy;
+                resultValue = enemy.value;
+                resultTTT = enemy.getTimeToTarget();
+                resultTTK = enemy.getTimeToKill()
             }
 
-            if (enemy.value > result.value) {
+            let value = enemy.value
+            if (value > resultValue) {
                 setEnemy(enemy);
                 return;
             }
 
-            if (enemy.getTimeToTarget() < result.getTimeToTarget()) {
+            let ttt = enemy.getTimeToTarget()
+            if (ttt < resultTTT) {
                 setEnemy(enemy);
                 return;
             }
 
-            if (enemy.getTimeToKill() < result.getTimeToKill()) {
+            let ttk = enemy.getTimeToKill()
+            if (ttk < resultTTK) {
                 setEnemy(enemy);
                 return;
             }
