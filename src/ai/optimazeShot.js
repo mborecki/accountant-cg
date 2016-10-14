@@ -28,7 +28,9 @@ export default function(enemy) {
 
     let iter = 0;
 
-    while (dist > KILL_RANGE) {
+    let optOrder = null
+
+    while (dist > KILL_RANGE && iter < targetTime) {
         iter++;
         dist = dist - dd;
 
@@ -36,8 +38,12 @@ export default function(enemy) {
 
 
         if (timeNow > timeNew && (timeNew < (targetTime - iter) || enemy.value > 1)) {
-            return moveOrder();
+            optOrder = moveOrder(enemy.getPosition(iter));
         }
+    }
+
+    if (optOrder) {
+        return optOrder;
     }
 
     function moveOrder() {
