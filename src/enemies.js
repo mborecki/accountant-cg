@@ -14,13 +14,20 @@ class Enemy {
         this.active = true;
 
         this.soloTime = null;
-        this.value = 0;
 
         this.path = [];
+
+        this.pickedTargets = [];
     }
 
     get cords() {
         return [this.x, this.y];
+    }
+
+    get value() {
+        return this.pickedTargets.filter((pick) => {
+            return pick.target.isSafeableBefore(pick.turn);
+        }).length;
     }
 
     move([x,y]) {
@@ -32,6 +39,22 @@ class Enemy {
         let target = targets.getClosest(this.cords);
 
         return target;
+    }
+
+    getClosestSafeableTarget() {
+        let result = null;
+        let picks = this.pickedTargets.slice();
+
+        if (!picks.length) return this.getClosestTarget();
+
+        while(picks.length) {
+            let p = picks.shift();
+            if (p.target.isSafeableBefore(p.turn)) {
+                return p.target;
+            }
+        }
+
+        return p[p.length - 1].target;
     }
 
     getNextPosition() {
@@ -75,7 +98,7 @@ class Enemy {
     }
 
     getTimeToTarget() {
-        let target = this.getClosestTarget();
+        let target = this.getClosestSafeableTarget();
         let dist = distance(this.cords, target.cords);
 
         return Math.ceil(dist / ENEMY_SPEED);
@@ -87,6 +110,7 @@ class Enemy {
 
     clearPath() {
         this.path.length = 0;
+        this.pickedTargets.length = 0;
     }
 
     endTurn() {
@@ -181,40 +205,49 @@ class Enemies {
         let resultTTT = null;
         let resultTTK = null;
 
-        this.data.forEach((enemy) => {
-            if (!result) {
-                result = enemy;
+        function setEnemy(enemy) {
+            printErr('setEnemy', enemy.id);
+            if (enemy.value === 1 && enemy.getTimeToKill() > enemy.getTimeToTarget()){
                 return;
             }
 
-            function setEnemy(enemy) {
-                if (enemy.value === 1 && enemy.getTimeToKill() > enemy.getTimeToTarget()){
-                    return;
-                }
+            result = enemy;
+            resultValue = enemy.value;
+            resultTTT = enemy.getTimeToTarget();
+            resultTTK = enemy.getTimeToKill()
+        }
 
-                result = enemy;
-                resultValue = enemy.value;
-                resultTTT = enemy.getTimeToTarget();
-                resultTTK = enemy.getTimeToKill()
-            }
+        this.data.forEach((enemy) => {
 
             let value = enemy.value
-            if (value > resultValue) {
-                setEnemy(enemy);
-                return;
-            }
-
             let ttt = enemy.getTimeToTarget()
-            if (ttt < resultTTT) {
+            let ttk = enemy.getTimeToKill()
+
+            printErr('ENEMY:', enemy.id, value, ttt, ttk);
+
+
+            if (!result) {
                 setEnemy(enemy);
                 return;
             }
 
-            let ttk = enemy.getTimeToKill()
-            if (ttk < resultTTK) {
+            if (value > resultValue) {
+                printErr('beter value', value, '>', resultValue)
                 setEnemy(enemy);
                 return;
-            }
+            } else if (value !== resultValue) return;
+
+            if (ttk < resultTTK) {
+                printErr('beter ttk', ttk, '<', resultTTK)
+                setEnemy(enemy);
+                return;
+            } else if (ttk !== resultTTT) return;
+
+            if (ttt < resultTTT) {
+                printErr('beter ttt', ttt, '<', resultTTT)
+                setEnemy(enemy);
+                return;
+            } else if (ttt !== resultTTT) return;
         })
 
         return result;
@@ -233,7 +266,7 @@ class Enemies {
             enemy.x = pos.x;
             enemy.y = pos.y;
 
-            printErr('Enemy', enemy.id, 'value:', enemy.value, enemy.getTimeToKill(), enemy.getTimeToTarget());
+            // printErr('Enemy', enemy.id, 'value:', enemy.value, enemy.getTimeToKill(), enemy.getTimeToTarget());
         })
     }
 

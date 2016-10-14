@@ -13,5 +13,7 @@ function createCommand(order) {
 }
 
 export default function() {
-    print(createCommand(run()));
+    let command = createCommand(run());
+    printErr(command)
+    print(command);
 }
