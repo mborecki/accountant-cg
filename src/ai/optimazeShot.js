@@ -1,7 +1,8 @@
 import {getPosition, getNextPosition, isInDanger} from '../player.js';
-import {distance, damage} from '../utils.js';
+import {distance, damage, pointInDistance, normalTo} from '../utils.js';
 import {PLAYER_SPEED, KILL_RANGE} from '../config.js';
 import {whenInDanger} from '../simulation.js';
+import Enemies from '../enemies.js';
 
 export default function(enemy) {
     printErr('optimazeShot', enemy.id);
@@ -26,6 +27,21 @@ export default function(enemy) {
 
     let dist = distNow;
 
+    if (enemy.life <= 14) {
+        printErr('weak enemy!', enemy.life);
+        printErr('targetTime', targetTime);
+        for(let i = 0; i < enemy.path.length && i <= targetTime && i < 3; i++) {
+            let ePos = enemy.getPosition(i);
+            let dist = distance(playerNow, ePos);
+            let d = damage(dist)
+            printErr(i,':', d);
+            if (d >= enemy.life) {
+                printErr('wait turn!', i);
+                return waitOrder(enemy);
+            }
+        }
+    }
+
     let iter = 0;
 
     let optOrder = null
@@ -44,6 +60,42 @@ export default function(enemy) {
 
     if (optOrder) {
         return optOrder;
+    }
+
+    function waitOrder(enemy) {
+        printErr('waitOrder');
+
+        let easyEnemy = Enemies.getOneTurnKill();
+
+        if (easyEnemy) {
+            return {
+                action: 'SHOOT',
+                id: easyEnemy.id
+            }
+        }
+
+        let next = enemy.getPosition(2);
+
+        printErr('distance', distance(next, playerNow), next);
+
+        if (distance(next, playerNow) > KILL_RANGE) {
+            printErr('STAY');
+            return {
+                action: 'MOVE',
+                x: playerNow[0],
+                y: playerNow[1]
+            }
+        } else {
+            printErr('MOVE A BIT!');
+
+            let [x,y] = pointInDistance(next, normalTo(next, playerNow), KILL_RANGE + 1);
+            return {
+                action: 'MOVE',
+                x: Math.floor(x),
+                y: Math.floor(y)
+            }
+        }
+
     }
 
     function moveOrder() {
