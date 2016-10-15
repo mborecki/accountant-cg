@@ -1,5 +1,5 @@
 import Enemies from './enemies.js';
-import {distance, normal} from './utils.js';
+import {distance, normal, inMap, pointInDistance} from './utils.js';
 import {KILL_RANGE, PLAYER_SPEED} from './config.js';
 
 const PLAYER = {
@@ -55,6 +55,33 @@ export function isInDangerInFuture(cords = PLAYER.cords, turns = 1) {
     })
 }
 
+export function getNewPosition(cords) {
+    let n = normal([cords[0] - PLAYER.x, cords[1] - PLAYER.y]);
+    let pos = pointInDistance(PLAYER.cords, n, PLAYER_SPEED);
+
+    if (inMap(pos)) {
+        return pos;
+    }
+
+    let speed = PLAYER_SPEED / 2;
+    let ds = speed / 2;
+
+    while(ds >= 1) {
+
+        if (inMap(pointInDistance(PLAYER.cords, n, speed))) {
+            speed = speed + ds;
+        } else {
+            speed = speed - ds;
+        }
+
+        ds = Math.floor(ds / 2);
+    }
+
+    return pointInDistance(PLAYER.cords, n, speed);
+
+
+}
+
 export function getNextPosition(order){
     switch(order.action) {
         case 'SHOOT':
@@ -67,8 +94,7 @@ export function getNextPosition(order){
                 return [order.x, order.y];
             }
 
-            let n = normal([order.x - PLAYER.x, order.y - PLAYER.y]);
-            return [Math.floor(PLAYER.x + n[0] * PLAYER_SPEED), Math.floor(PLAYER.y + n[1] * PLAYER_SPEED)];
+            return getNewPosition([order.x, order.y])
 
         default:
             return PLAYER.cords;
