@@ -8,8 +8,6 @@ export default function() {
     let inputs = readline().split(' ');
     setPosition([parseInt(inputs[0]),parseInt(inputs[1])]);
 
-    Enemies.beforeInput();
-
     var dataCount = parseInt(readline());
     let targetsId = new Set();
     for (var i = 0; i < dataCount; i++) {
@@ -25,6 +23,7 @@ export default function() {
     Targets.updateList(targetsId);
 
     var enemyCount = parseInt(readline());
+    let enemiesIds = new Set();
     for (var i = 0; i < enemyCount; i++) {
         let inputs = readline().split(' ');
         let id = parseInt(inputs[0]);
@@ -35,7 +34,8 @@ export default function() {
         printErr('[E]', id, '[', x, y, ']', life);
 
         Enemies.update(id, [x,y], life);
+        enemiesIds.add(id);
     }
 
-    Enemies.afterInput();
+    Enemies.updateList(enemiesIds);
 }

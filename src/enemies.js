@@ -126,25 +126,17 @@ class Enemies {
         });
     }
 
-    beforeInput() {
-        this.data.forEach((enemy) => {
-            enemy.active = false;
-        });
-    }
-
-    afterInput() {
-        let toDelete = [];
-        this.data.forEach((enemy) => {
-            if (!enemy.active) {
-                toDelete.push(enemy.id);
+    updateList(ids) {
+        let toDel = [];
+        this.data.forEach((t) => {
+            if (!ids.has(t.id)) {
+                toDel.push(t.id);
             }
         });
 
-        if (toDelete.length) {
-            toDelete.forEach((id) => {
-                this.data.delete(id);
-            });
-        }
+        toDel.forEach((id) => {
+            this.data.delete(id);
+        })
     }
 
     update(id, cords, life) {
