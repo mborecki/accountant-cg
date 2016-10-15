@@ -321,6 +321,19 @@ class Enemies {
 
         return result;
     }
+
+    getOneTurnKill() {
+        let pos = getPlayerPosition();
+        let kills = this.filter((enemy) => {
+            return enemy.getTimeToKill(pos) === 1;
+        });
+
+        if (kills.size) {
+            return kills.getHighValueTarget();
+        }
+
+        return null;
+    }
 }
 
 export const EnemiesClass = Enemies;

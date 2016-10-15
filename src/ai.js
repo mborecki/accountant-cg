@@ -20,6 +20,15 @@ let mode = MODE_SHOOT_HIGH_VALUE_TEAM;
 
 export function run() {
 
+    let fastKill = Enemies.getOneTurnKill();
+
+    if (fastKill) {
+        return orderValidate({
+            action: 'SHOOT',
+            id: fastKill.id
+        })
+    }
+
     let order = (function(){
         switch (mode) {
 
