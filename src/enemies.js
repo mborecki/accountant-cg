@@ -202,9 +202,6 @@ class Enemies {
 
         function setEnemy(enemy) {
             printErr('setEnemy', enemy.id);
-            if (enemy.value === 1 && enemy.getTimeToKill() > enemy.getTimeToTarget()){
-                return;
-            }
 
             result = enemy;
             resultValue = enemy.value;
@@ -214,12 +211,7 @@ class Enemies {
 
         this.data.forEach((enemy) => {
 
-            let value = enemy.value
-            let ttt = enemy.getTimeToTarget()
-            let ttk = enemy.getTimeToKill()
-
-            printErr('ENEMY:', enemy.id, value, ttt, ttk);
-
+            let value = enemy.value;
 
             if (!result) {
                 setEnemy(enemy);
@@ -227,19 +219,18 @@ class Enemies {
             }
 
             if (value > resultValue) {
-                printErr('beter value', value, '>', resultValue)
                 setEnemy(enemy);
                 return;
             } else if (value !== resultValue) return;
 
+            let ttk = enemy.getTimeToKill();
             if (ttk < resultTTK) {
-                printErr('beter ttk', ttk, '<', resultTTK)
                 setEnemy(enemy);
                 return;
             } else if (ttk !== resultTTT) return;
 
+            let ttt = enemy.getTimeToTarget();
             if (ttt < resultTTT) {
-                printErr('beter ttt', ttt, '<', resultTTT)
                 setEnemy(enemy);
                 return;
             } else if (ttt !== resultTTT) return;
@@ -260,9 +251,7 @@ class Enemies {
             let pos = this.posCache.get(enemy.id);
             enemy.x = pos.x;
             enemy.y = pos.y;
-
-            // printErr('Enemy', enemy.id, 'value:', enemy.value, enemy.getTimeToKill(), enemy.getTimeToTarget());
-        })
+        });
     }
 
     getMiddle() {
