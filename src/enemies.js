@@ -284,6 +284,45 @@ class Enemies {
             enemy.endTurn();
         })
     }
+
+    filter(condition) {
+        let pass = [];
+
+        this.data.forEach((enemy) => {
+            if (condition(enemy, this)) {
+                pass.push(enemy);
+                // printErr('pass', enemy.id)
+            }
+        })
+
+        return new Enemies(pass);
+    }
+
+    getFarrest(cords) {
+        let result = null;
+        let resultDist = null;
+
+        let setResult = function(enemy) {
+            result = enemy;
+            resultDist = distance(cords, enemy.cords);
+        }
+
+        this.data.forEach((enemy) => {
+            if (!result) {
+                setResult(enemy);
+                return;
+            }
+
+            let dist = distance(cords, enemy.cords);
+            if (dist > resultDist) {
+                setResult(enemy);
+            }
+        });
+
+        return result;
+    }
 }
+
+export const EnemiesClass = Enemies;
 
 export default new Enemies();

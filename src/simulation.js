@@ -98,9 +98,9 @@ export function fullSimulation(enemies = Enemies, targets = Targets) {
         });
         soloSimulation(enemy, turn);
 
-        printErr(enemy.id, 'enemy.pickedTargets', enemy.pickedTargets.map((p) => {
-            return p.turn;
-        }))
+        // printErr(enemy.id, 'enemy.pickedTargets', enemy.pickedTargets.map((p) => {
+        //     return p.turn;
+        // }))
     });
 
     gameTimeLimit = turn;

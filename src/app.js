@@ -6,6 +6,7 @@ import {getMaxPoints} from './simulation.js';
 
 import Enemies from './enemies.js';
 import {fullSimulation} from './simulation.js';
+import Teams, {buildTeams} from './teams.js';
 
 let turnCounter = 0;
 
@@ -15,6 +16,8 @@ while (true) {
     input();
 
     fullSimulation();
+    buildTeams();
+    printErr('TEAMS COUNT:', Teams.size);
 
     if (turnCounter === 1) {
         printErr('MAX POINTS', getMaxPoints())
