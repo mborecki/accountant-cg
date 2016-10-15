@@ -1,4 +1,4 @@
-import {isInDanger, getNextPosition, getPosition} from '../player.js';
+import {isInDanger, getNextPosition, getPosition, getNewPosition} from '../player.js';
 import {normal, add, rotate, pointInDistance, inMap} from '../utils.js';
 import {PLAYER_SPEED, MAP_W, MAP_H} from '../config.js';
 import Enemies from '../enemies.js';
@@ -20,12 +20,12 @@ function runByCircle(pos, path) {
     let safePoints = [];
 
     for (let i = 0; i < Math.PI; i = i + Math.PI / STEPS) {
-        let p1 = pointInDistance(pos, rotate(path, i), PLAYER_SPEED);
-        if (inMap(p1) && Enemies.isSafe(p1)) {
+        let p1 = getNewPosition(pointInDistance(pos, rotate(path, i), PLAYER_SPEED));
+        if (Enemies.isSafe(p1)) {
             safePoints.push(p1);
         }
-        let p2 = pointInDistance(pos, rotate(path, -i), PLAYER_SPEED);
-        if (inMap(p2) && Enemies.isSafe(p2)) {
+        let p2 = getNewPosition(pointInDistance(pos, rotate(path, -i), PLAYER_SPEED));
+        if (Enemies.isSafe(p2)) {
             safePoints.push(p2);
         }
     }
@@ -81,33 +81,7 @@ export default function orderValidate(order) {
         let escapePath = normal(add(escapePaths));
         let pos = getPosition();
 
-        let x = Math.floor(pos[0] + escapePath[0] * PLAYER_SPEED);
-        let y = Math.floor(pos[1] + escapePath[1] * PLAYER_SPEED);
-
-
-        if (x < 0) {
-            x = 0;
-            y = ((pos[1] - y) > 0) ? 0 : MAP_H;
-        }
-
-        if (x > MAP_W) {
-            x = MAP_W;
-            y = ((pos[1] - y) > 0) ? 0 : MAP_H;
-        }
-
-        if (y < 0) {
-            x = ((pos[0] - x) > 0) ? 0 : MAP_W;
-            y = 0;
-        }
-
-        if (y > MAP_H) {
-            x = ((pos[0] - x) > 0) ? 0 : MAP_W;
-            y = MAP_H;
-        }
-
-        // if (!Enemies.isSafe([x,y])) {
-            return runByCircle(pos, escapePath);
-        // }
+        return runByCircle(pos, escapePath);
 
         return orderValidate({
             action: 'MOVE',
