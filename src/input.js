@@ -1,4 +1,4 @@
-import {setPosition as playerSetPosition} from './player.js';
+import {setPosition} from './player.js';
 import Targets from './targets.js';
 import Enemies from './enemies.js';
 
@@ -6,20 +6,23 @@ export default function() {
 
     // Read player position;
     let inputs = readline().split(' ');
-    playerSetPosition([parseInt(inputs[0]),parseInt(inputs[1])]);
+    setPosition([parseInt(inputs[0]),parseInt(inputs[1])]);
 
-    Targets.clear();
     Enemies.beforeInput();
 
     var dataCount = parseInt(readline());
+    let targetsId = new Set();
     for (var i = 0; i < dataCount; i++) {
         let inputs = readline().split(' ');
         let id = parseInt(inputs[0]);
         let x = parseInt(inputs[1]);
         let y = parseInt(inputs[2]);
 
-        Targets.update(id, [x,y]);
+        Targets.add(id, [x, y]);
+        targetsId.add(id);
     }
+
+    Targets.updateList(targetsId);
 
     var enemyCount = parseInt(readline());
     for (var i = 0; i < enemyCount; i++) {

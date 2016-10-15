@@ -120,7 +120,10 @@ class Enemy {
 
 class Enemies {
     constructor(data = []) {
-        this.data = new Map(data);
+        this.data = new Map();
+        data.forEach((e) => {
+            this.data.set(e.id, e);
+        });
     }
 
     beforeInput() {

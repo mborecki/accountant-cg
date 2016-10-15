@@ -13,21 +13,6 @@ class Target {
         this.timeline = new Map();
     }
 
-    // isSafeableBefore(turnLimit = gameTimeLimit) {
-    //     let iter = this.timeline.entries();
-
-    //     let e = iter.next();
-    //     let
-
-    //     while(e) {
-    //         let [data, turn] = [e.value, e.key];
-
-    //         e = iter.next();
-    //     }
-
-
-    // }
-
     isSafeableBefore(_turnLimit) {
         let turnLimit = getGameTime();
         let ttk = 0;
@@ -67,18 +52,37 @@ class Target {
 
 class Targets {
     constructor(data = []) {
-        this.data = new Map(data);
+        this.data = new Map();
+        data.forEach((e) => {
+            this.data.set(e.id, e);
+        });
     }
 
     clear() {
         this.data.clear();
     }
 
-    update(id, cords) {
+    add(id, cords) {
+
+        if (this.data.get(id)) return;
+
         this.data.set(id, new Target({
             id,
             cords
         }));
+    }
+
+    updateList(ids) {
+        let toDel = [];
+        this.data.forEach((t) => {
+            if (!ids.has(t.id)) {
+                toDel.push(t.id);
+            }
+        });
+
+        toDel.forEach((id) => {
+            this.data.delete(id);
+        })
     }
 
     delete(id) {
