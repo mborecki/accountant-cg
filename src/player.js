@@ -29,7 +29,7 @@ export function isInDanger(cords = PLAYER.cords) {
         let dist = distance(cords, next)
         if (dist <= KILL_RANGE ) {
             // TODO next -> point of entry
-            printErr('in danger because of enemy', enemy.id);
+            printErr('in danger because of enemy', enemy.id, dist);
             dangers.push(next);
         };
     });

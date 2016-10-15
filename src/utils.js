@@ -53,6 +53,10 @@ export function damage(distance) {
     return Math.round(125000 / Math.pow(distance, 1.2));
 }
 
+export function minDistance(damage) {
+    return Math.pow(125000 / damage, (1 / 1.2));
+}
+
 export function log(n, base) {
     return Math.log(n) / Math.log(base);
 }

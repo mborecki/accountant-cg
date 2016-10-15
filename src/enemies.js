@@ -201,8 +201,6 @@ class Enemies {
         let resultTTK = null;
 
         function setEnemy(enemy) {
-            printErr('setEnemy', enemy.id);
-
             result = enemy;
             resultValue = enemy.value;
             resultTTT = enemy.getTimeToTarget();
